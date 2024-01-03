@@ -1,32 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Generar Archivo Excel</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador Numérico</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<button id="downloadButton">Descargar Excel</button>
+    <div class="contador">
+        <button onclick="restar()">-</button>
+        <span id="contadorNumero">0</span>
+        <button onclick="sumar()">+</button>
+    </div>
 
-<script>
-document.getElementById('downloadButton').addEventListener('click', function() {
-  // Crear datos para el archivo Excel
-  var data = [
-    ['Nombre', 'Edad', 'Correo'],
-    ['Juan', 30, 'juan@example.com'],
-    ['María', 28, 'maria@example.com'],
-    ['Carlos', 25, 'carlos@example.com']
-  ];
-
-  // Crear una hoja de trabajo
-  var wb = XLSX.utils.book_new();
-  var ws = XLSX.utils.aoa_to_sheet(data);
-  XLSX.utils.book_append_sheet(wb, ws, 'Datos');
-
-  // Generar el archivo Excel y descargarlo
-  XLSX.writeFile(wb, 'datos.xlsx');
-});
-</script>
+    <script src="script.js"></script>
 </body>
 </html>
