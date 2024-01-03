@@ -1,19 +1,37 @@
-<!-- Agrega esto antes de </body> en tu HTML -->
-<script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js"></script>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador Numérico</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Agrega esto antes de </body> en tu HTML -->
+    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js"></script>
 
-<script>
-  // Configuración de Firebase (reemplaza con tus propias credenciales)
-  const firebaseConfig = {
-    apiKey: "TU_API_KEY",
-    authDomain: "TU_DOMINIO.firebaseapp.com",
-    projectId: "TU_ID_DE_PROYECTO",
-    storageBucket: "TU_BUCKET.appspot.com",
-    databaseURL: "https://TU_ID_DE_PROYECTO.firebaseio.com",
-    messagingSenderId: "TU_MESSAGING_SENDER_ID",
-    appId: "TU_APP_ID"
-  };
+    <script>
+      // Configuración de Firebase (reemplaza con tus propias credenciales)
+      const firebaseConfig = {
+        apiKey: "TU_API_KEY",
+        authDomain: "TU_DOMINIO.firebaseapp.com",
+        projectId: "TU_ID_DE_PROYECTO",
+        storageBucket: "TU_BUCKET.appspot.com",
+        databaseURL: "https://TU_ID_DE_PROYECTO.firebaseio.com",
+        messagingSenderId: "TU_MESSAGING_SENDER_ID",
+        appId: "TU_APP_ID"
+      };
 
-  // Inicializa Firebase
-  firebase.initializeApp(firebaseConfig);
-</script>
+      // Inicializa Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
+</head>
+<body>
+    <div class="contador">
+        <button onclick="restar()">-</button>
+        <span id="contadorNumero">0</span>
+        <button onclick="sumar()">+</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
