@@ -1,22 +1,26 @@
-let contador = localStorage.getItem('contador') || 0;
+let contadorRef = firebase.database().ref('contador');
+let contador = 0;
 const contadorNumero = document.getElementById('contadorNumero');
 
+// Obtiene el valor inicial del contador desde la base de datos
+contadorRef.once('value', (snapshot) => {
+  contador = snapshot.val() || 0;
+  actualizarContador();
+});
+
 function sumar() {
-    contador++;
-    actualizarContador();
+  contador++;
+  actualizarContador();
 }
 
 function restar() {
-    if (contador > 0) {
-        contador--;
-        actualizarContador();
-    }
+  if (contador > 0) {
+    contador--;
+    actualizarContador();
+  }
 }
 
 function actualizarContador() {
-    contadorNumero.textContent = contador;
-    localStorage.setItem('contador', contador);
+  contadorNumero.textContent = contador;
+  contadorRef.set(contador); // Actualiza el valor en la base de datos
 }
-
-// Actualizar el contador al cargar la página
-actualizarContador();
