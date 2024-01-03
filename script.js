@@ -1,4 +1,4 @@
-let contador = 0;
+let contador = localStorage.getItem('contador') || 0;
 const contadorNumero = document.getElementById('contadorNumero');
 
 function sumar() {
@@ -15,4 +15,8 @@ function restar() {
 
 function actualizarContador() {
     contadorNumero.textContent = contador;
+    localStorage.setItem('contador', contador);
 }
+
+// Actualizar el contador al cargar la página
+actualizarContador();
