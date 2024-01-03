@@ -1,0 +1,25 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.contador {
+    display: flex;
+    align-items: center;
+}
+
+button {
+    font-size: 1.5em;
+    margin: 0 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+#contadorNumero {
+    font-size: 2em;
+    margin: 0 10px;
+}
