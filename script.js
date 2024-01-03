@@ -1,22 +1,26 @@
-let contadorRef = firebase.database().ref('contador');
+const GITHUB_API_URL = 'https://api.github.com/repos/usuario/repo/contents/contador.txt';
 let contador = 0;
 const contadorNumero = document.getElementById('contadorNumero');
 
-// Obtén el valor inicial del contador desde la base de datos
-contadorRef.once('value', (snapshot) => {
-  contador = snapshot.val() || 0;
-  actualizarContador();
-});
+// Obtén el valor inicial del contador desde GitHub
+axios.get(GITHUB_API_URL)
+  .then(response => {
+    contador = parseInt(atob(response.data.content)) || 0;
+    actualizarContador();
+  })
+  .catch(error => {
+    console.error('Error al obtener el contador:', error);
+  });
 
 function sumar() {
   contador++;
-  actualizarContadorEnFirebase(); // Actualiza el valor en la base de datos
+  actualizarContadorEnGitHub(); // Actualiza el valor en el repositorio de GitHub
 }
 
 function restar() {
   if (contador > 0) {
     contador--;
-    actualizarContadorEnFirebase(); // Actualiza el valor en la base de datos
+    actualizarContadorEnGitHub(); // Actualiza el valor en el repositorio de GitHub
   }
 }
 
@@ -24,9 +28,27 @@ function actualizarContador() {
   contadorNumero.textContent = contador;
 }
 
-function actualizarContadorEnFirebase() {
+function actualizarContadorEnGitHub() {
   actualizarContador();
-  contadorRef.set(contador); // Actualiza el valor en la base de datos
+
+  // Actualiza el valor en el repositorio de GitHub
+  const nuevoContenido = btoa(contador.toString());
+  const commitMessage = 'Actualizar contador';
+
+  axios.put(
+    GITHUB_API_URL,
+    {
+      message: commitMessage,
+      content: nuevoContenido,
+      sha: nuevoContenido.sha
+    }
+  )
+  .then(response => {
+    console.log('Contador actualizado con éxito:', response.data);
+  })
+  .catch(error => {
+    console.error('Error al actualizar el contador:', error);
+  });
 }
 
 // Actualiza el contador al cargar la página
