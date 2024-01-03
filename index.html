@@ -6,7 +6,8 @@
     <title>Contador Numérico</title>
     <link rel="stylesheet" href="styles.css">
     <!-- Agrega esto antes de </body> en tu HTML -->
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js"></script>
 </head>
 <body>
     <div class="contador">
@@ -15,6 +16,55 @@
         <button onclick="sumar()">+</button>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // Configuración de Firebase (reemplaza con tus propias credenciales)
+        const firebaseConfig = {
+            apiKey: "TU_API_KEY",
+            authDomain: "TU_DOMINIO.firebaseapp.com",
+            projectId: "TU_ID_DE_PROYECTO",
+            storageBucket: "TU_BUCKET.appspot.com",
+            databaseURL: "https://TU_ID_DE_PROYECTO.firebaseio.com",
+            messagingSenderId: "TU_MESSAGING_SENDER_ID",
+            appId: "TU_APP_ID"
+        };
+
+        // Inicializa Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Obtén una referencia a la ubicación del contador en la base de datos de Firebase
+        const contadorRef = firebase.database().ref('contador');
+        let contador = 0;
+        const contadorNumero = document.getElementById('contadorNumero');
+
+        // Obtén el valor inicial del contador desde la base de datos
+        contadorRef.once('value', (snapshot) => {
+            contador = snapshot.val() || 0;
+            actualizarContador();
+        });
+
+        function sumar() {
+            contador++;
+            actualizarContadorEnFirebase(); // Actualiza el valor en la base de datos de Firebase
+        }
+
+        function restar() {
+            if (contador > 0) {
+                contador--;
+                actualizarContadorEnFirebase(); // Actualiza el valor en la base de datos de Firebase
+            }
+        }
+
+        function actualizarContador() {
+            contadorNumero.textContent = contador;
+        }
+
+        function actualizarContadorEnFirebase() {
+            actualizarContador();
+            contadorRef.set(contador); // Actualiza el valor en la base de datos de Firebase
+        }
+
+        // Actualiza el contador al cargar la página
+        actualizarContador();
+    </script>
 </body>
 </html>
